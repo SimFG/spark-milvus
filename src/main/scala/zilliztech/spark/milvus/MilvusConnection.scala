@@ -3,6 +3,7 @@ package zilliztech.spark.milvus
 import io.milvus.client.MilvusServiceClient
 import io.milvus.param.ConnectParam
 
+import org.slf4j.LoggerFactory
 import scala.collection.mutable
 
 case class MilvusConnection (
@@ -11,6 +12,7 @@ case class MilvusConnection (
 
 object MilvusConnection {
   private val cache = new mutable.HashMap[String, MilvusServiceClient]
+  private val log = LoggerFactory.getLogger(getClass)
 
   def acquire(milvusOptions: MilvusOptions): MilvusServiceClient = {
     lazy val connectParam = if (milvusOptions.uri.isEmpty) {
@@ -28,6 +30,7 @@ object MilvusConnection {
         .build
     }
 
+    log.info(s"connection info ${milvusOptions.host}.${milvusOptions.port}, status: ${milvusOptions.uri}")
     new MilvusServiceClient(connectParam)
 //    cache.getOrElseUpdate(milvusOptions.toString, new MilvusServiceClient(connectParam))
   }

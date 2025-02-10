@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import zilliztech.spark.milvus.MilvusOptions._
 
 import java.util
+import java.util.concurrent.TimeUnit
 
 object InsertDemo {
   private val log = LoggerFactory.getLogger(getClass)
@@ -19,19 +20,20 @@ object InsertDemo {
       .appName("InsertDemo")
       .getOrCreate()
 
-    val host = "localhost"
-    val port = 19530
-    val uri = ""
-    val token = ""
+    val host = ""
+    val port = 19537
+    val uri = "https://in01-1479b85614880b2.aws-us-west-2.vectordb-uat3.zillizcloud.com:19537"
+    val token = "root:n7}y3XJb4<oxMORqRU!!TMn1swDK4[]Q"
     val collectionName = "hello_spark_milvus"
     val filePath = "data/insert_demo/data.json"
 
     // 1. create milvus collection through milvus SDK
     val connectParam: ConnectParam = ConnectParam.newBuilder
-      .withHost(host)
-      .withPort(port)
+      // .withHost(host)
+      // .withPort(port)
       .withUri(uri)
       .withToken(token)
+      // .withConnectTimeout(1, TimeUnit.HOURS)
       .build
 
     val client: MilvusClient = new MilvusServiceClient(connectParam)

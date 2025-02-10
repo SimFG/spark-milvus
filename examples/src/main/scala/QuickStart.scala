@@ -45,4 +45,23 @@ object QuickStart extends App {
     .option("milvus.collection.primaryKeyField", "id")
     .mode(SaveMode.Append)
     .save()
+
+  milvusDf.write.format("milvus")
+    .option("milvus.uri", "https://in01-1479b85614880b2.aws-us-west-2.vectordb-uat3.zillizcloud.com:19537")
+    .option("milvus.token", "root:n7}y3XJb4<oxMORqRU!!TMn1swDK4[]Q")
+    .option("milvus.collection.name", "hello_spark_milvus")
+    .option("milvus.collection.vectorField", "embeddings")
+    .option("milvus.collection.vectorDim", "32")
+    .option("milvus.collection.primaryKeyField", "id")
+    .mode(SaveMode.Append)
+    .save()
+
+  val milvusOptions = Map(
+      "milvus.uri" -> "https://in01-1479b85614880b2.aws-us-west-2.vectordb-uat3.zillizcloud.com:19537",
+      "milvus.token" -> "root:n7}y3XJb4<oxMORqRU!!TMn1swDK4[]Q",
+      "milvus.collection.name" -> "hello_spark_milvus",
+      "milvus.collection.vectorField" -> "vec",
+      "milvus.collection.vectorDim" -> "5",
+      "milvus.collection.primaryKeyField" -> "id"
+    )
 }
